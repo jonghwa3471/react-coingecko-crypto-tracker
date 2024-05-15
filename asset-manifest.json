@@ -1,10 +1,10 @@
 {
   "files": {
-    "main.js": "/to-the-moon/static/js/main.1b23ec08.js",
+    "main.js": "/to-the-moon/static/js/main.9d707757.js",
     "index.html": "/to-the-moon/index.html",
-    "main.1b23ec08.js.map": "/to-the-moon/static/js/main.1b23ec08.js.map"
+    "main.9d707757.js.map": "/to-the-moon/static/js/main.9d707757.js.map"
   },
   "entrypoints": [
-    "static/js/main.1b23ec08.js"
+    "static/js/main.9d707757.js"
   ]
 }
