@@ -1,99 +1,129 @@
+import styled from "styled-components";
 import { useQuery } from "react-query";
 import { fetchCoinHistory } from "../api";
-import ApexChart from "react-apexcharts";
+import ReactApexChart from "react-apexcharts";
+import { ApexOptions } from "apexcharts";
+import { FlexBox } from "../components/BuildingBlocks";
+import LoadingScreen from "../components/Loading";
 
-interface IHistorical {
-  time_open: number;
-  time_close: number;
-  open: string;
-  high: string;
-  low: string;
-  close: string;
-  volume: string;
-  market_cap: number;
+const ChartBlock = styled(FlexBox)`
+  justify-items: flex-end;
+  align-items: center;
+  flex-direction: column;
+  height: 100%;
+  width: 100%;
+  padding-top: 60px;
+`;
+
+interface IChart {
+  isLineChart: boolean;
+  symbol: string;
+  cryptoId: string;
+  day: string;
+  theme: string;
 }
 
-interface ChartProps {
-  coinId: string;
-}
-
-function Chart({ coinId }: ChartProps) {
-  const { isLoading, data } = useQuery<IHistorical[]>(
-    ["ohlcv", coinId],
-    () => fetchCoinHistory(coinId),
-    {
-      refetchInterval: 10000,
-    }
+export default function Chart(props: IChart) {
+  const { isLoading, data: historicalData } = useQuery<number[][]>(
+    ["ohlcv" + props.cryptoId, props.day],
+    () => fetchCoinHistory(props.cryptoId, props.day) //1, 7, 30, 365, max
   );
+  const close_prices = historicalData?.map((data) => ({
+    x: data[0],
+    y: data[data.length - 1],
+  }));
+  const lineOptions: ApexOptions = {
+    chart: {
+      type: "line",
+      toolbar: {
+        show: false,
+      },
+      background: "transparent",
+      width: "400px",
+    },
+    theme: {
+      mode: props.theme == "dark" ? "dark" : "light",
+    },
+    yaxis: {
+      labels: {
+        formatter: function (val: number) {
+          return val
+            .toLocaleString("en-US", {
+              minimumFractionDigits: 6,
+            })
+            .replace(/\.?0+$/, "");
+        },
+      },
+    },
+    xaxis: {
+      type: "datetime",
+      axisTicks: { show: false },
+    },
+    grid: {
+      show: false,
+    },
+    stroke: {
+      curve: "smooth",
+      width: 3,
+    },
+  };
+  const candleOptions: ApexOptions = {
+    chart: {
+      zoom: {
+        enabled: true,
+      },
+      toolbar: {
+        show: false,
+      },
+      background: "transparent",
+    },
+    theme: {
+      mode: props.theme == "dark" ? "dark" : "light",
+    },
+    grid: { show: false },
+    yaxis: {
+      labels: {
+        formatter: function (val: number) {
+          return val
+            .toLocaleString("en-US", {
+              minimumFractionDigits: 6,
+            })
+            .replace(/\.?0+$/, "");
+        },
+      },
+    },
+    xaxis: {
+      axisBorder: { show: false },
+      axisTicks: { show: false },
+      type: "datetime",
+    },
+  };
+
   return (
-    <div>
+    <ChartBlock>
       {isLoading ? (
-        "Loading chart..."
+        <LoadingScreen />
       ) : (
-        <ApexChart
-          type="line"
+        <ReactApexChart
+          options={props.isLineChart ? lineOptions : candleOptions}
           series={[
             {
-              name: "Price",
-              data: data?.map((price) => parseFloat(price.close)) ?? [],
+              name: props.isLineChart ? "Closing Price" : "ohlcv",
+              data: props.isLineChart
+                ? close_prices
+                  ? close_prices
+                  : []
+                : historicalData
+                ? historicalData
+                : [],
+              //data: close_prices ? close_prices : [],
             },
           ]}
-          options={{
-            theme: {
-              mode: "dark",
-            },
-            chart: {
-              height: 500,
-              width: 500,
-              toolbar: {
-                show: false,
-              },
-              background: "transparent",
-            },
-            grid: {
-              show: false,
-            },
-            stroke: {
-              curve: "smooth",
-              width: 5,
-            },
-            yaxis: {
-              show: false,
-            },
-            xaxis: {
-              labels: {
-                show: false,
-              },
-              axisTicks: {
-                show: false,
-              },
-              axisBorder: {
-                show: false,
-              },
-              type: "datetime",
-              categories:
-                data?.map((price) =>
-                  new Date(price.time_close * 1000).toISOString()
-                ) ?? [],
-            },
-            fill: {
-              type: "gradient",
-              gradient: {
-                gradientToColors: ["#0be881"],
-                stops: [0, 100],
-              },
-            },
-            colors: ["#0fbcf9"],
-            tooltip: {
-              y: {
-                formatter: (value) => `$${value.toFixed(2)}`,
-              },
-            },
-          }}
+          width="1000"
+          height="300"
+          type={props.isLineChart ? "line" : "candlestick"}
         />
       )}
-    </div>
+    </ChartBlock>
   );
 }
-
-export default Chart;

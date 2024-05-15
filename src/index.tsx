@@ -1,23 +1,23 @@
 import React from "react";
 import ReactDOM from "react-dom/client";
-import App from "./App";
+import Root from "./Root";
+import { lightTheme, darkTheme } from "./components/theme";
 import { ThemeProvider } from "styled-components";
-import { theme } from "./theme";
-import { HelmetProvider } from "react-helmet-async";
+import { RouterProvider } from "react-router-dom";
 import { QueryClient, QueryClientProvider } from "react-query";
+import router from "./Router";
+
+const queryClient = new QueryClient();
 
 const root = ReactDOM.createRoot(
   document.getElementById("root") as HTMLElement
 );
-
-const queryClient = new QueryClient();
-
 root.render(
   <QueryClientProvider client={queryClient}>
-    <HelmetProvider>
-      <ThemeProvider theme={theme}>
-        <App />
+    <React.StrictMode>
+      <ThemeProvider theme={darkTheme}>
+        <RouterProvider router={router} />
       </ThemeProvider>
-    </HelmetProvider>
+    </React.StrictMode>
   </QueryClientProvider>
 );
