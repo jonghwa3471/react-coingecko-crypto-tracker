@@ -27,7 +27,10 @@ const LoadingText = styled.span`
 export default function LoadingScreen() {
   return (
     <LoadingBlock>
-      <img src="https://static.coingecko.com/s/coingecko-branding-guide-8447de673439420efa0ab1e0e03a1f8b0137270fbc9c0b7c086ee284bd417fa1.png" />
+      <img
+        alt="coingecko-logo"
+        src="https://static.coingecko.com/s/coingecko-branding-guide-8447de673439420efa0ab1e0e03a1f8b0137270fbc9c0b7c086ee284bd417fa1.png"
+      />
       <LoadingHeader>Hang tight 👻</LoadingHeader>
       <LoadingText>
         We're trying to fetch the requested data from CoinGecko

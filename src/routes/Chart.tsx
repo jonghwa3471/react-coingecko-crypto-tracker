@@ -42,7 +42,7 @@ export default function Chart(props: IChart) {
       width: "400px",
     },
     theme: {
-      mode: props.theme == "dark" ? "dark" : "light",
+      mode: props.theme === "dark" ? "dark" : "light",
     },
     yaxis: {
       labels: {
@@ -78,7 +78,7 @@ export default function Chart(props: IChart) {
       background: "transparent",
     },
     theme: {
-      mode: props.theme == "dark" ? "dark" : "light",
+      mode: props.theme === "dark" ? "dark" : "light",
     },
     grid: { show: false },
     yaxis: {
