@@ -53,5 +53,5 @@
   "devDependencies": {
     "@types/styled-components": "^5.1.26"
   },
-  "homepage": "https://jonghwa3471.github.io/react-challenge-crypto-tracker"
+  "homepage": "https://jonghwa3471.github.io/react-coingecko-crypto-tracker"
 }
