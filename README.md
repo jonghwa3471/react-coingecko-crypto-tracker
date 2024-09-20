@@ -2,7 +2,7 @@
 React Challenge with Coingecko API
 
 ## 🔗 Demo
-https://jonghwa3471.github.io/react-challenge-crypto-tracker/
+https://jonghwa3471.github.io/react-coingecko-crypto-tracker/
 
 ## 🖥 Preview
 <img src="preview-crypto-tracker.png"/>
