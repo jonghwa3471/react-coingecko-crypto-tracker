@@ -1,10 +1,10 @@
 {
   "files": {
-    "main.js": "/react-challenge-crypto-tracker/static/js/main.3ea2981d.js",
-    "index.html": "/react-challenge-crypto-tracker/index.html",
-    "main.3ea2981d.js.map": "/react-challenge-crypto-tracker/static/js/main.3ea2981d.js.map"
+    "main.js": "/react-coingecko-crypto-tracker/static/js/main.cdab115c.js",
+    "index.html": "/react-coingecko-crypto-tracker/index.html",
+    "main.cdab115c.js.map": "/react-coingecko-crypto-tracker/static/js/main.cdab115c.js.map"
   },
   "entrypoints": [
-    "static/js/main.3ea2981d.js"
+    "static/js/main.cdab115c.js"
   ]
 }
